@@ -80,8 +80,20 @@ class Process
      * @param entry Initial program counter value.
      * @param privileged If true, the process has unlimited access to hardware.
      * @param map Memory map to use
+     * @param priority Priority level of the Process
      */
     Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map);
+
+    /**
+     * Constructor function.
+     *
+     * @param id Process Identifier
+     * @param entry Initial program counter value.
+     * @param privileged If true, the process has unlimited access to hardware.
+     * @param map Memory map to use
+     * @param priority Priority level of the Process
+     */
+    Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map, u8 priority);
 
     /**
      * Destructor function.
@@ -148,6 +160,13 @@ class Process
      * @return True if equal, false otherwise.
      */
     bool operator == (Process *proc);
+
+    /**
+     * Get priority.
+     *
+     * @return Priority of the Process.
+     */
+    u8 getPriority() const;
 
   protected:
 
@@ -285,6 +304,9 @@ class Process
 
     /** Channel for sending kernel events to the Process */
     MemoryChannel *m_kernelChannel;
+    
+    /** Scheduling Priority of Process, default 3 and goes 1-5 with 1 being the lowest */
+    u8 m_priority;
 };
 
 /**

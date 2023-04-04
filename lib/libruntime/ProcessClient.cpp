@@ -103,3 +103,10 @@ ProcessID ProcessClient::findProcess(const String program) const
         return ANY;
     }
 }
+
+u8 ProcessClient::getPriority(const String program) const
+{
+    ProcessClient::Info info;
+
+
+}

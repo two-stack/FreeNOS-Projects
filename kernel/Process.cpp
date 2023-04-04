@@ -23,6 +23,32 @@
 #include "Process.h"
 #include "ProcessEvent.h"
 
+//constructor that includes priority parameter
+Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map, u8 priority = 3)
+    : m_id(id), m_map(map), m_shares(id)
+{
+    m_state         = Stopped;
+    m_parent        = 0;
+    m_waitId        = 0;
+    m_waitResult    = 0;
+    m_wakeups       = 0;
+    m_entry         = entry;
+    m_privileged    = privileged;
+    m_memoryContext = ZERO;
+    m_kernelChannel = ZERO;
+
+    //ensure that priority is value 1-5
+    if(priority > 5 || priority < 1)
+    {
+        m_priority = 3;
+    }
+    else
+        m_priority = priority;
+    
+    MemoryBlock::set(&m_sleepTimer, 0, sizeof(m_sleepTimer));
+}
+
+//constructor without priority parameter, defaults priority to 3
 Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map)
     : m_id(id), m_map(map), m_shares(id)
 {
@@ -35,6 +61,8 @@ Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &
     m_privileged    = privileged;
     m_memoryContext = ZERO;
     m_kernelChannel = ZERO;
+    m_priority = 3;
+    
     MemoryBlock::set(&m_sleepTimer, 0, sizeof(m_sleepTimer));
 }
 
@@ -100,6 +128,11 @@ MemoryContext * Process::getMemoryContext()
 bool Process::isPrivileged() const
 {
     return m_privileged;
+}
+
+u8 Process::getPriority() const
+{
+    return m_priority;
 }
 
 void Process::setParent(ProcessID id)
