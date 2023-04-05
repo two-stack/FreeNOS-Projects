@@ -67,6 +67,7 @@ class ProcessClient
         /** Textual state of the process */
         String textState;
 
+        /** Priority of the process*/
         u8 priorityLevel;
     }
     Info;
@@ -87,6 +88,14 @@ class ProcessClient
      * @return Parent Process ID
      */
     ProcessID getParentID() const;
+
+    /**
+     * Get process priority
+     *
+     * @return Process Priority
+     */
+    u8 getPriority() const;
+
 
     /**
      * Get process information by its ID.
@@ -139,6 +148,8 @@ class ProcessClient
 
     /** Our parent process identifier */
     static const ProcessID m_parent;
+
+    static const u8 m_priority;
 };
 
 /**

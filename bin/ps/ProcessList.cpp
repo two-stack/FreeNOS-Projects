@@ -33,11 +33,13 @@ ProcessList::Result ProcessList::exec()
 {
     const ProcessClient process;
     String out;
+
+    //if showing priority is enabled
     bool pEnabled = arguments().get("priority");
 
     if(pEnabled)
     {
-        out << "ID  PARENT PRIORITY USER GROUP STATUS     CMD\r\n";
+        out << "ID  PARENT USER GROUP STATUS     CMD                               PRIORITY\r\n";
     }
     else
     {
@@ -57,15 +59,26 @@ ProcessList::Result ProcessList::exec()
 
             if(pEnabled)
             {
+                // Output a line
+                char line[256];
+                snprintf(line, sizeof(line),
+                    "%3d %7d %4d %5d %10s %32s %u\r\n",
+                     pid, info.kernelState.parent,
+                     0, 0, *info.textState, *info.command,  info.priorityLevel);
+                out << line;
             }
-
-            // Output a line
-            char line[128];
-            snprintf(line, sizeof(line),
+            else
+            {
+                // Output a line
+                char line[128];
+                snprintf(line, sizeof(line),
                     "%3d %7d %4d %5d %10s %32s\r\n",
                      pid, info.kernelState.parent,
-                     0, 0, *info.textState, *info.command, info.priorityLevel);
-            out << line;
+                     0, 0, *info.textState, *info.command);
+                out << line;
+            }
+
+            
         }
     }
 
