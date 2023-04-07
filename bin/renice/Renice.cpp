@@ -35,7 +35,6 @@ Renice::Renice(int argc, char **argv)
 Renice::Result Renice::exec()
 {
     ProcessClient process;
-    String out;
 
     ProcessID pid = atoi(arguments().get("PID"));
     u8 priority = atoi(arguments().get("PRIORITY"));
@@ -52,10 +51,8 @@ Renice::Result Renice::exec()
         return InvalidArgument;
     }
     
-    //out << "test" + pid;
-    
-    process.setPriority(16, 1);
+    process.setPriority(pid, priority);
 
-    printf("hello");
+    printf("\nhello\n");
     return Success;
 }

@@ -47,7 +47,7 @@ u8 ProcessClient::getPriority(ProcessID pid) const
 
 void ProcessClient::setPriority(ProcessID pid, u8 priority)
 {
-    ProcessCtl(16, SetPriority, 0);
+    ProcessCtl(pid, SetPriority, priority);
 }
 
 
