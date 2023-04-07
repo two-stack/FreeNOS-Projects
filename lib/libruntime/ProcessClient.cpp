@@ -20,6 +20,7 @@
 #include <Macros.h>
 #include "ProcessClient.h"
 
+
 const ProcessID ProcessClient::m_pid = ProcessCtl(SELF, GetPID, 0);
 
 const ProcessID ProcessClient::m_parent = ProcessCtl(SELF, GetParent, 0);
@@ -38,10 +39,18 @@ ProcessID ProcessClient::getParentID() const
     return m_parent;
 }
 
-u8 ProcessClient::getPriority() const
+u8 ProcessClient::getPriority(ProcessID pid) const
 {
-    return m_priority;
+    
+    return ProcessCtl(pid, GetPriority, 0);
 }
+
+void ProcessClient::setPriority(ProcessID pid, u8 priority)
+{
+    ProcessCtl(16, SetPriority, 0);
+}
+
+
 
 ProcessClient::Result ProcessClient::processInfo(const ProcessID pid,
                                                  ProcessClient::Info &info) const

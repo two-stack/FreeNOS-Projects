@@ -138,8 +138,16 @@ class ProcessClient
      *
      * @return Current Process priority
      */
-    u8 getPriority(const String program) const;
+    u8 getPriority(ProcessID pid) const;
 
+    /**
+     * Set priority of the given pid
+     * 
+     * @param pid the process to be changed
+     * @param priority the priority to change to
+     * 
+    */
+    void setPriority(ProcessID pid, u8 priority);
 
   private:
 

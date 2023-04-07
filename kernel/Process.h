@@ -168,6 +168,14 @@ class Process
      */
     u8 getPriority() const;
 
+    /**
+     * Set the priority.
+     * 
+     * @param priority the priority to change to
+     * 
+    */
+    u8 setPriority(u8 priority);
+
   protected:
 
     /**

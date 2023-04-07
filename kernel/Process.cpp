@@ -140,6 +140,12 @@ void Process::setParent(ProcessID id)
     m_parent = id;
 }
 
+u8 Process::setPriority(u8 priority)
+{
+    m_priority = priority;
+    return priority;
+}
+
 Process::Result Process::wait(ProcessID id)
 {
     if (m_state != Ready)
