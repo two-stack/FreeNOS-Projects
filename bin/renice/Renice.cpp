@@ -51,8 +51,9 @@ Renice::Result Renice::exec()
         return InvalidArgument;
     }
     
-    process.setPriority(pid, priority);
 
-    printf("\nhello\n");
+
+    process.setPriority(pid, priority);
+    printf("\nfinished");
     return Success;
 }
