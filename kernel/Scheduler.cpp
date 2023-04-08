@@ -26,7 +26,7 @@ Scheduler::Scheduler()
 
 Size Scheduler::count() const
 {
-    return m_queue5.count();
+    return m_queue1.count()+m_queue2.count()+m_queue3.count()+m_queue4.count()+m_queue5.count();
 }
 
 Scheduler::Result Scheduler::enqueue(Process *proc, bool ignoreState)
